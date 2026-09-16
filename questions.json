@@ -1,1 +1,58 @@
 
+[
+  {
+    "id": 1,
+    "question": "Countries like the United States do not self-regulate their engineering profession and rely on appointed licensing boards... What is the meaning of a 'self-regulating' profession:",
+    "options": [
+      "A) A group of people who review each other's work for correctness.",
+      "B) Each province/territory has passed an Act to form an Association which regulates the profession.",
+      "C) An association ensures its members follow bylaws and pay dues...",
+      "D) Interprovincial teams that police the decisions of their members."
+    ],
+    "correct_option": 1
+  },
+  {
+    "id": 2,
+    "question": "At company Roller Coaster Inc, a team designs a roller coaster structure... How many people should seal the drawing?",
+    "options": [
+      "A) One",
+      "B) Up to five",
+      "C) Everyone involved in the project should seal",
+      "D) One for the approving professional and the professional for each discipline"
+    ],
+    "correct_option": 3
+  },
+  {
+    "id": 3,
+    "question": "Jane, P.Geo., is vice president at a large environmental consulting firm... Jane's decision can be most closely described as applying which ONE of the following ethical theories:",
+    "options": [
+      "A) Aristotle's Virtue-Based Ethics",
+      "B) Kant's Duty-Based Ethics",
+      "C) Locke's Rights-Based Ethics",
+      "D) Mill's Utilitarianism"
+    ],
+    "correct_option": 3
+  },
+  {
+    "id": 4,
+    "question": "Omar is a P.Eng., and along with his partner, provides structural design services... Omar actions are most closely in violation of:",
+    "options": [
+      "A) Fidelity to public needs",
+      "B) The reasonable person test",
+      "C) Secret commission",
+      "D) The Code of Ethics"
+    ],
+    "correct_option": 3
+  },
+  {
+    "id": 5,
+    "question": "Jump Inc., a company based in Milton, Ontario, has begun manufacturing... The two other main conditions that a product must satisfy according to the Act are:",
+    "options": [
+      "A) Quality & durability",
+      "B) Reliability & affordability",
+      "C) Safety & durability",
+      "D) Safety & quality"
+    ],
+    "correct_option": 3
+  }
+]
