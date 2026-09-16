@@ -1,4 +1,3 @@
-import json
 import pytz
 from datetime import time
 from telegram import Update, Poll
@@ -7,40 +6,75 @@ from telegram.ext import Application, CommandHandler, ContextTypes
 BOT_TOKEN = "8940981359:AAF3MvNa5Qe15D6ZfhBxDDbSQT6m8TLm7-g"
 MY_CHAT_ID = 318823278
 
-# بارگذاری سوالات
-with open('questions.json', 'r', encoding='utf-8') as f:
-    QUESTIONS = json.load(f)
+# بانک نمونه سوالات NPPE Ethics (مستقیم داخل کد)
+QUESTIONS = [
+    {
+        "id": 1,
+        "question": "Countries like the United States do not self-regulate their engineering profession. In contrast, Canadian engineers are self-regulated. What is the meaning of a 'self-regulating' profession:",
+        "options": [
+            "A) A group of people who review each other's work.",
+            "B) Each province/territory passed an Act to form an Association to regulate.",
+            "C) An association ensures its members follow bylaws and pay dues.",
+            "D) Interprovincial teams that police the decisions of members."
+        ],
+        "correct_option": 1
+    },
+    {
+        "id": 2,
+        "question": "At Roller Coaster Inc, a team designs a structure. The drawings cover several engineering disciplines. How many people should seal the drawing?",
+        "options": [
+            "A) One",
+            "B) Up to five",
+            "C) Everyone involved in the project",
+            "D) One for approving professional and one for each discipline"
+        ],
+        "correct_option": 3
+    },
+    {
+        "id": 3,
+        "question": "Jane, P.Geo., developed technology that benefits clients but reduces firm revenue. She proceeds because it produces greatest benefit for greatest number. This applies:",
+        "options": [
+            "A) Aristotle's Virtue-Based Ethics",
+            "B) Kant's Duty-Based Ethics",
+            "C) Locke's Rights-Based Ethics",
+            "D) Mill's Utilitarianism"
+        ],
+        "correct_option": 3
+    },
+    {
+        "id": 4,
+        "question": "Omar, P.Eng., didn't give a standard 20% discount to a desperate client to keep extra money as a secret. Omar actions violate:",
+        "options": [
+            "A) Fidelity to public needs",
+            "B) The reasonable person test",
+            "C) Secret commission",
+            "D) The Code of Ethics"
+        ],
+        "correct_option": 3
+    }
+]
 
-user_progress = {"current_index": 0}
+current_index = 0
 
 async def send_quiz(context: ContextTypes.DEFAULT_TYPE):
-    idx = user_progress["current_index"]
-    if idx >= len(QUESTIONS):
-        await context.bot.send_message(chat_id=MY_CHAT_ID, text="🎉 تبریک! تمام سوالات آزمون NPPE دوره شدند.")
+    global current_index
+    if current_index >= len(QUESTIONS):
+        await context.bot.send_message(chat_id=MY_CHAT_ID, text="🎉 دوره سوالات به پایان رسید.")
         return
 
-    q = QUESTIONS[idx]
-    q_text = q['question']
-    if len(q_text) > 280:
-        q_text = q_text[:277] + "..."
-
+    q = QUESTIONS[current_index]
     await context.bot.send_poll(
         chat_id=MY_CHAT_ID,
-        question=f"📌 NPPE Ethics #{q['id']}/{len(QUESTIONS)}\n\n{q_text}",
+        question=f"📌 NPPE Ethics Question #{q['id']}\n\n{q['question']}",
         options=q['options'],
         type=Poll.QUIZ,
         correct_option_id=q['correct_option'],
         is_anonymous=False
     )
-    user_progress["current_index"] += 1
+    current_index += 1
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
-        "سلام ريان عزیز! 🌿\n\n"
-        "ربات مطالعه آزمون اخلاق و حقوق مهندسی (NPPE) فعال شد.\n"
-        "روزانه ۲ سوال سر ساعت‌های ۹ صبح و ۶ عصر برای شما ارسال می‌شود.\n\n"
-        "برای دریافت فوری سوال بعدی، دستور /quiz را بزنید."
-    )
+    await update.message.reply_text("سلام ريان عزیز! 🌿\nربات NPPE Ethics فعال شد.\nبرای دریافت سوال /quiz را بزنید.")
 
 async def quiz_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await send_quiz(context)
@@ -51,7 +85,6 @@ def main():
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("quiz", quiz_command))
     
-    # تنظیم زمان‌بندی ارسال (ساعت ۹ صبح و ۶ عصر به وقت آلبرتا)
     tz = pytz.timezone("America/Edmonton")
     job_queue = app.job_queue
     job_queue.run_daily(send_quiz, time=time(hour=9, minute=0, tzinfo=tz))
